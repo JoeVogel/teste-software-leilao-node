@@ -1,32 +1,27 @@
+const db = require('./db');
+const { AuctionDAO } = require('./auctionDAO');
+const auctionDAO = new AuctionDAO(db);
 
-let auctions = [];
-let bids = [];
 
-function createAuction(auction) {
-    auctions.push(auction);
-}
-
-function getAuctionById(id) {
-    return auctions.find(auction => auction.id === id);
-}
-
-function getBidsForAuction(auctionId) {
-    return bids.filter(bid => bid.auctionId === auctionId);
+function createAuction(auction){
+    return auctionDAO.createAuction(auction);
 }
 
 
-function placeBid(auctionId, userId, amount) {
-    const auction = getAuctionById(auctionId);
-    if (!auction) {
-        throw new Error('Leilão não encontrado.');
-    }
-
-    if (amount <= auction.startingPrice) {
-        throw new Error('O valor do lance deve ser maior do que o preço inicial.');
-    }
-
-    bids.push({ auctionId, userId, amount });
+function getAuctionById(id){
+    return auctionDAO.getAuctionById(id);
 }
+
+
+function getBidsForAuction(auctionId){
+    return auctionDAO.getBidsForAuction(auctionId);
+}
+
+
+function placeBid(auctionId, userId, amount){
+    return auctionDAO.placeBid(auctionId, userId, amount);
+}
+
 
 module.exports = {
     createAuction,

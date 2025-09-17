@@ -1,14 +1,16 @@
-let users = [];
+const db = require('./db');
+const { UserDAO } = require('./userDAO');
+const userDAO = new UserDAO(db);
 
-function addUser(user) {
-    users.push(user);
+
+function addUser(user){
+    return userDAO.addUser(user);
 }
 
-function getUserById(id) {
-    return users.find(user => user.id === id);
+
+function getUserById(id){
+    return userDAO.getUserById(id);
 }
 
-module.exports = {
-    addUser,
-    getUserById
-};
+
+module.exports = { addUser, getUserById };
